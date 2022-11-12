@@ -19,8 +19,6 @@ const Header = () => {
         arr.forEach((el)=> {
           amount+=el[1].amount
         })
-       
-        console.log(amount)
         return amount
     }
 
@@ -77,7 +75,7 @@ const Header = () => {
                             <span>Профиль</span>
                     </div>
                     <div className="header__icons-item header__icons-cart" onClick = {()=> router.push('/cart')}>
-                            <small className="header__cart-round"></small>
+                            <small className="header__cart-round">{cartResult(state.cart)}</small>
                             <i className="fa fa-shopping-cart"/>
                             <span>Корзина</span>
                     </div>

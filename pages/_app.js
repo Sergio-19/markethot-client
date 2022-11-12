@@ -2,6 +2,7 @@
 import '../styles/app.scss'
 import AppContext from '../appContext'
 import { useState, useEffect } from 'react'
+import axios from "axios"
 
 
 
@@ -9,16 +10,27 @@ function MyApp({ Component, pageProps }) {
 
 
   const [cart, setCart] = useState({})
+  const [info, setInfo] = useState([])
+
+  async function getCartInfo(cart) {
+    const cartKeys = Object.keys(cart)
+    const response = await axios.post('http://localhost:5000/admin//getcartinfo', {cart: JSON.stringify(cartKeys)})
+    setInfo(response.data.goods)
+}
 
 
 
   useEffect(()=> {  
     let obj = {}
+    
     Object.keys(localStorage).forEach((el)=> { 
       if(el !== 'ally-supports-cache'){
         obj[el] = JSON.parse(localStorage[el])
     }
   })
+  if(Object.keys(obj).length > 0){
+    getCartInfo(obj)
+  }
   setCart(obj)
   }, [])
 
@@ -65,7 +77,8 @@ function addLocaleStorage(cart) {
   return (
     <AppContext.Provider value={{
       state: {  cart: cart,
-                addGood: addGood
+                addGood: addGood,
+                info
       }
     }}>
       <Component {...pageProps}/> 
