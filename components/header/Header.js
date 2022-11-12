@@ -8,12 +8,27 @@ const Header = () => {
     function cartResult(cart) {
         let amount = 0
         let keys = Object.keys(cart)
-       
 
+        let arr = []
+
+        keys.forEach((k)=>{
+            let x = Object.entries(cart[k])
+            arr = [...arr, ...x]
+        })
+
+        arr.forEach((el)=> {
+          amount+=el[1].amount
+        })
+       
+        console.log(amount)
         return amount
     }
 
+    
+
     const router = useRouter()
+
+
     return(
         <>
         <header>
