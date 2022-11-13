@@ -10,7 +10,26 @@ const Cart = () => {
 
     const {state} = useContext(AppContext)
 
+    function cartTotal(cart, info) {
+        let total = 0
+        let keys = Object.keys(cart)
 
+        let arr = []
+
+        keys.forEach((k)=>{
+            let x = Object.values(cart[k])
+            x.map((item)=>{
+                item.headArticle = k
+            })
+            arr = [...arr, ...x]
+        })
+        arr.forEach((el)=> {
+            total += (Number(info[el.headArticle].kinds[el.article].price) * el.amount)
+        })
+        return total
+    }
+
+    
 
 
     function cartAmount(cart) {
@@ -66,7 +85,11 @@ const Cart = () => {
                                       option = {state.info[good.headArticle].kinds[good.article].option}
                                       amount = {good.amount}
                                       price = {state.info[good.headArticle].kinds[good.article].price}
-                                      article = {good.headArticle}
+                                      headArticle = {good.headArticle}
+                                      article = {good.article}
+                                      deleteGood = {state.deleteGood}
+                                      goodIncrement = {state.goodIncrement}
+                                      goodDecrement = {state.goodDecrement}
                            /> 
                         )
                     })} 
@@ -92,12 +115,12 @@ const Cart = () => {
             <div className="cart__order cart__blocks-card">
                     <div className="cart__order-head">
                         <span>Итого:</span>
-                        <span id= "cart__order-result" className="cart__order-head-price">0 ₽</span>
+                        <span id= "cart__order-result" className="cart__order-head-price">{cartTotal(state.cart, state.info)} ₽</span>
                     </div>
                     <div className="cart__order-content">
                         <div className="cart__order-content-item">
                             <span id= "cart__order-amount">Товары: {cartAmount(state.cart)} шт.</span>
-                            <span id= "cart__order-sum">0 ₽ </span>
+                            <span id= "cart__order-sum">{cartTotal(state.cart, state.info)} ₽ </span>
                         </div>
                         <div className="cart__order-content-item">
                             <span>Доставка:</span>
@@ -113,7 +136,7 @@ const Cart = () => {
                         <p>Картой</p>
                     </div>
                     <div className="cart__order-btn">
-                        <button>Оплатить заказ</button>
+                        <button>Оформить заказ</button>
                     </div>
                 </div> 
         </div>

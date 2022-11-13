@@ -1,26 +1,26 @@
 import { useRouter } from "next/router"
 
-const CartItem = ({image, name, option, amount, price, article}) => {
+const CartItem = ({image, name, option, amount, price, headArticle, article, deleteGood, goodIncrement, goodDecrement}) => {
     const router = useRouter()
     return (
         <>
          <div className="cart__blocks-good-item">
     <div className="cart__blocks-good-item-info">
-        <div className="cart__blocks-good-item-info-image" onClick={()=> router.push(`/good/${article}`)}>
+        <div className="cart__blocks-good-item-info-image" onClick={()=> router.push(`/good/${headArticle}`)}>
             <img src= {image} alt= 'name'/>
         </div>
-        <div className="cart__blocks-good-item-info-text" onClick={()=> router.push(`/good/${article}`)}>
+        <div className="cart__blocks-good-item-info-text" onClick={()=> router.push(`/good/${headArticle}`)}>
             <p>{name}</p>
             <span>{option === 'Пустое поле' ? '' : `(${option})`}</span>
         </div>
     </div>
     <div className="cart__blocks-good-item-amount">
-        <button data-good_id = '${good.article}' className= 'j-minus'>-</button>
+        <button  className= 'j-minus' onClick = {()=> goodDecrement(headArticle ,article)}>-</button>
         <div className="cart__blocks-good-item-amount-delete">
             <strong>{amount}</strong>
-            <span data-good_id = '${good.article}' className="j-delete">Удалить</span>
+            <span className="j-delete" onClick = {()=> deleteGood(headArticle ,article)}>Удалить</span>
         </div>
-        <button data-good_id = '${good.article}' className='j-plus'>+</button>
+        <button  className='j-plus' onClick = {()=> goodIncrement(headArticle ,article)}>+</button>
     </div>
     <div className="cart__blocks-good-item-price">
         <strong>{price} ₽</strong>
