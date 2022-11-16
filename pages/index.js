@@ -8,10 +8,10 @@ export default function Home({goods}) {
 
 
   return (
-    <Layout>
+    <Layout title = 'Hopastore интернет-магазин оптовых продаж бытовых товаров из Турции с доставкой по всей России' description = "Официальный сайт Hopastore в России. Hopastore - это интернет-магазин оптовых продаж бытовых товаров из Турции с доставкой по всей России. Огромный выбор товаров и выгодные цены на электронику и бытовую технику, одежду для детей и взрослых, товары для дома и сада и многое другое в интернет-магазине hopastore.">
      <div className="home__sale-wrap">
         <div className="home__sale">
-          <p>Товары для Нового Года со скидкой до 70%!!!</p>
+          <h1 style = {{fontSize: '16px', fontWeight: 'normal'}}>Оптовые поставки бытовых товаров по всей России, скидки до 70%!!!</h1>
         </div>
      </div>
      <div className="home__content-wrap">

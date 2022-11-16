@@ -91,7 +91,8 @@ const Order = () => {
 
         if(router.query.order === state.order){
           return(
-        <Layout>
+        <Layout title = 'Hopastore интернет-магазин оптовых продаж бытовых товаров из Турции с доставкой по всей России'
+                description = "Официальный сайт Hopastore в России. Hopastore - это интернет-магазин оптовых продаж бытовых товаров из Турции с доставкой по всей России. Огромный выбор товаров и выгодные цены на электронику и бытовую технику, одежду для детей и взрослых, товары для дома и сада и многое другое в интернет-магазине hopastore.">
             {state.info.length === 0 ? <Loader /> : <div className="order__wrapper">
             <div className="order__title">
                         <h2>Заказ № <strong style={{textTransform: 'uppercase', fontSize: '22px'}}>{router.query.order}</strong></h2>

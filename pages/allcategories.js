@@ -5,7 +5,8 @@ import CategoryCard from "../components/categoryCard/CategoryCard";
 const AllCategories = () => {
 
     return (
-        <Layout>
+        <Layout title = 'Hopastore интернет-магазин оптовых продаж бытовых товаров из Турции с доставкой по всей России' 
+                description = 'Hopastore, Оптовые продажи товаров категорий: товары для дома, красота и здоровье, электроника, детские товары, подарки и хобби, спорт и отдых, авто товары, товары к празднику и еще многие другие.'>
          <div className="home__sale-wrap">
             <div className="home__sale">
               <p>Товары для Нового Года со скидкой до 70%!!!</p>

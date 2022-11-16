@@ -45,7 +45,7 @@ const Header = () => {
             <div className="container">
                 <div className="header__content">
                     <div className="header__logo">
-                        <a href="/">HotMarket</a>
+                        <a href="/">Hopa_Store</a>
                     </div>
                     <div className="header__search">
                         <div className="header__search__wrap">
