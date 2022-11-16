@@ -15,7 +15,8 @@ function MyApp({ Component, pageProps }) {
                                                     formValid: false,
                                                     message: ''
                                                   })
-  const [token, setToken] = useState('')                                                
+  const [token, setToken] = useState('')   
+  const [searchInputValue, setSearchInputValue] = useState('')                                             
   const [cart, setCart] = useState({})
   const [info, setInfo] = useState([])
   const [showModal, setShowModal] = useState(false)
@@ -60,6 +61,17 @@ function MyApp({ Component, pageProps }) {
   })
 
   }, [])
+
+  //функция ввода в инпут для поиска
+  function changeSearchInput(e) {
+    setSearchInputValue(e.target.value)
+  }
+
+  //функция очистки поля поиска
+  function cleanInput() {
+    console.log('clean')
+    setSearchInputValue('')
+  }
 
   //функция получения информации о пользователе
   async function getUser(email){
@@ -316,7 +328,10 @@ async function loginHandler(phone, email) {
                 login, //даные login
                 changeLogin,
                 loginHandler, 
-                token
+                token,
+                searchInputValue,
+                changeSearchInput,
+                cleanInput
       }
     }}>
       <Component {...pageProps}/> 

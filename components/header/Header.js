@@ -22,6 +22,18 @@ const Header = () => {
         return amount
     }
 
+
+    function searchHandler(event) {
+        if(event.code === 'Enter'){
+            state.cleanInput()
+            redirect(state.searchInputValue !== '' ? state.searchInputValue : 'Поиск')
+        }
+    }
+
+    function redirect(value) {
+        router.push(`/categories/${value}`)
+    }
+  
     
 
     const router = useRouter()
@@ -38,7 +50,12 @@ const Header = () => {
                     <div className="header__search">
                         <div className="header__search__wrap">
                            <i className="fa fa-search"/>  
-                           <input type= 'text' placeholder='Поиск'/>       
+                           <input type= 'text' 
+                                  placeholder='Поиск' 
+                                  defaultValue={state.searchInputValue}
+                                  onChange = {(event)=> state.changeSearchInput(event)}
+                                  onKeyDown = {(event)=> searchHandler(event)}
+                                  />       
                         </div>
                     </div>
                     <div className="header__icons">

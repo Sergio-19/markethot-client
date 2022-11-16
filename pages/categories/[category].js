@@ -35,6 +35,8 @@ const CategoryPage = ({goods}) => {
 
 
 
+
+
    const {query} = useRouter()
     return (
       <Layout>
@@ -66,8 +68,16 @@ const CategoryPage = ({goods}) => {
       )
 }
 
+function whatMethod(query) {
+  let met = ''
+  if(query === 'tovary_dlya_doma' || query === 'krasota_i_zdorove' || query === 'elektronika' || query === 'detskie_tovary' || query === 'podarki_i_khobbi' || query === 'tv-tovari' || query === 'sport_i_otdykh' || query === 'avto' || query === 'Noviy_god' || query === 'clothes') {
+    met = 'category'
+  } else met = 'search'
+  return met
+}
+
 export async function getServerSideProps({params}) {
-    const response = await axios.post('http://localhost:5000/admin/allgoods', {category: params.category})
+    const response = await axios.post('http://localhost:5000/admin/allgoods', {category: params.category, met: whatMethod(params.category)})
     const goods = response.data.goods
   return {
     props: {goods}, // will be passed to the page component as props
