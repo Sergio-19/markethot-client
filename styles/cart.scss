@@ -135,8 +135,15 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  .cart__blocks-delivery-content-text{
+    display: flex;
+    flex-direction: column;
+  }
   .cart__blocks-delivery-content strong {
     font-size: 16px;
+    margin-bottom: 10px;
+    margin-top: 10px;
   }
   .cart__blocks-delivery-content span {
     font-size: 16px;
@@ -163,6 +170,49 @@
   .cart_blocks-personal-label small {
     color: #AC3D67;
     font-size: 18px;
+  }
+
+  .personal__form{
+
+  }
+
+  .personal__from-item{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+
+    label{
+        font-size: 18px;
+        color: #2d2d2d;
+        margin-bottom: 4px;
+
+        small{
+            color: #AC3D67;
+        }
+    }
+    
+    input{
+        
+        padding: 0 15px;
+        border-radius: 6px;
+        height: 45px;
+        width: 100%;
+        max-width: 550px;
+        outline: none;
+        font-size: 18px;
+        color: #2d2d2d;
+    }
+  }
+
+  .input__normal{
+    border: 1px solid #bac5cc;
+  }
+
+  .input__valid {
+    border-color: #00B863;
+  }
+  .input__invalid {
+    border-color: red;
   }
   
   .cart__order {
@@ -202,6 +252,8 @@
   .cart__order-option p {
     color: #646363;
     font-size: 18px;
+    margin: 5px 0;
+    line-height: 1.5;
   }
   
   .cart__order-btn {
@@ -218,6 +270,7 @@
     border-radius: 10px;
     padding: 8px 18px;
     width: 90%;
+    max-width: 250px;
   }
   .cart__order-btn button:hover {
     background-color: #772544;

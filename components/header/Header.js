@@ -42,7 +42,7 @@ const Header = () => {
                         </div>
                     </div>
                     <div className="header__icons">
-                        <div className="header__icons-item" onClick = {()=> router.push('/profile')}>
+                        <div className="header__icons-item" onClick = {()=> router.push('/login')}>
                             <i className="fa fa-user"/>
                             <span>Профиль</span>
                         </div>
@@ -70,7 +70,7 @@ const Header = () => {
                             <i className="fa fa-folder"/>
                             <span>Категории</span>
                     </div>
-                    <div className="header__icons-item" onClick = {()=> router.push('/profile')}>
+                    <div className="header__icons-item" onClick = {()=> router.push('/login')}>
                             <i className="fa fa-user"/>
                             <span>Профиль</span>
                     </div>

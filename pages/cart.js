@@ -3,12 +3,41 @@ import Layout from "../components/layout/Layout"
 import { useContext } from "react"
 import Loader from '../components/loader/Loader'
 import AppContext from "../appContext"
+import Modal from "../components/modal/Modal"
+import { useRouter } from "next/router"
 
 
 const Cart = () => {
 
+    const router = useRouter()
+
+    function redirect() {
+        setTimeout(()=> {
+            router.push('/')
+        }, 100)
+    }
+
+   
+
+
+    function inputValidation(valid, touched) {
+        const classes = ['input__normal']
+        if(valid && touched){ classes.push('input__valid')}
+        if(!valid && touched){classes.push('input__invalid')}
+
+        return classes.join(' ')
+    }
+
 
     const {state} = useContext(AppContext)
+
+    if(Object.keys(state.cart).length === 0){
+        redirect()
+    }
+
+    const {formcontrolls, formValid} = state.personal
+
+   
 
     function cartTotal(cart, info) {
         let total = 0
@@ -28,9 +57,6 @@ const Cart = () => {
         })
         return total
     }
-
-    
-
 
     function cartAmount(cart) {
         let amount = 0
@@ -68,8 +94,12 @@ const Cart = () => {
    let cartArray = cartResult(state.cart)
 
 
+
+
+
     return (
         <Layout>
+            <Modal />
            {Object.keys(state.info).length === 0 ? <Loader /> : 
             <div className="cart__wrap">
             <div className="cart__blocks">
@@ -100,23 +130,67 @@ const Cart = () => {
                     </div>
                     <div className="cart__blocks-delivery-content-wrap">
                         <div className="cart__blocks-delivery-content">
-                            <strong>Адрес доставки:</strong>
-                            <span>Адрес не указан</span>
-                            <button>Изменить</button>
+                            <div className="cart__blocks-delivery-content-text">
+                                <strong>Адрес доставки:</strong>
+                                <span>{state.deliveryAddress === '' ? 'Адрес не указан' : state.deliveryAddress}</span>
+                                <strong>Способ доставки:</strong>
+                                <span>{state.deliveryCheck === 1 ? 'Доставка в пункт выдачи' : "Доставка курьером"}</span>
+                            </div>
+                            <button onClick = {state.showModalHandler}>Изменить</button>
                         </div>
                     </div>
                 </div>
                 <div className="cart__blocks-card cart__blocks-personal">
                     <div className="cart__blocks-card-title">
                         <h2>Ваши данные</h2>
+                        <p>Уже заказывали у нас? войдите в профиль по e-mail и телефону</p>
+                        <button onClick = {()=> router.push('/login')}>Войти</button>
+                    </div>
+                    <div className="personal__form">
+                        <div className="personal__from-item">
+                            <label><small>*</small>Телефон</label>
+                            <input type = 'number' 
+                                   defaultValue={formcontrolls.phone.value}
+                                   className = {inputValidation(formcontrolls.phone.valid, formcontrolls.phone.touched)}
+                                   onChange = {(event)=> state.changePersonal(event, 'phone')}
+                                   />
+                        </div>
+                        <div className="personal__from-item">
+                            <label><small>*</small>E-mail</label>
+                            <input type = 'text' 
+                                   defaultValue={formcontrolls.email.value} 
+                                   className = {inputValidation(formcontrolls.email.valid, formcontrolls.email.touched)}
+                                   onChange = {(event)=> state.changePersonal(event, 'email')}
+                                   />
+                        </div>
+                        <div className="personal__from-item">
+                            <label><small>*</small>Имя</label>
+                            <input type = 'text' 
+                                   defaultValue={formcontrolls.name.value} 
+                                   className = {inputValidation(formcontrolls.name.valid, formcontrolls.name.touched)}
+                                   onChange = {(event)=> state.changePersonal(event, 'name')}
+                                   />
+                        </div>
+                        <div className="personal__from-item">
+                            <label>Фамилия</label>
+                            <input type = 'text' 
+                                   defaultValue={formcontrolls.surname.value} 
+                                   onChange = {(event)=> state.changePersonal(event, 'surname')}
+                                   className = 'input__normal'
+                                   />
+                        </div>
+
+                    </div>
+                    <div className="cart__blocks-card-title">
+                    {formValid && state.deliveryAddress !== "" ? <button onClick = {()=> router.push(`/order/${state.order}`)}>Оформить заказ</button> : <></>}
                     </div>
                 </div>
             </div> 
             <div className="cart__order cart__blocks-card">
                     <div className="cart__order-head">
                         <span>Итого:</span>
-                        <span id= "cart__order-result" className="cart__order-head-price">{cartTotal(state.cart, state.info)} ₽</span>
-                    </div>
+                        <span id= "cart__order-result" className="cart__order-head-price">{state.deliveryCheck === 2 && state.deliveryAddress !== '' ? cartTotal(state.cart, state.info)+499 : cartTotal(state.cart, state.info)} ₽</span>
+                    </div>                                                                              
                     <div className="cart__order-content">
                         <div className="cart__order-content-item">
                             <span id= "cart__order-amount">Товары: {cartAmount(state.cart)} шт.</span>
@@ -124,19 +198,23 @@ const Cart = () => {
                         </div>
                         <div className="cart__order-content-item">
                             <span>Доставка:</span>
-                            <span id= "cart__order-delivery">0 ₽</span>
+                            <span id= "cart__order-delivery">{state.deliveryCheck === 2 &&  state.deliveryAddress !== ''? 499 : 0} ₽</span>
                         </div>
                     </div>
                     <div className="cart__order-option">
                         <span>Адрес:</span>
-                        <p>Адрес не указан</p>
+                        <p>{state.deliveryAddress === '' ? 'Адрес не указан' : state.deliveryAddress}</p>
+                    </div>
+                    <div className="cart__order-option">
+                        <span>Доставка:</span>
+                        <p>{state.deliveryAddress !== '' ? 'В течение пяти дней' : ''}</p>
                     </div>
                     <div className="cart__order-option">
                         <span>Оплата:</span>
                         <p>Картой</p>
                     </div>
                     <div className="cart__order-btn">
-                        <button>Оформить заказ</button>
+                        {formValid && state.deliveryAddress !== "" ? <button onClick = {()=> router.push(`/order/${state.order}`)}>Оформить заказ</button> : <></>}
                     </div>
                 </div> 
         </div>
