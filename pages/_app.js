@@ -31,12 +31,23 @@ function MyApp({ Component, pageProps }) {
                                                             },
                                             formValid: false                
                                             })
-  const [order, setOrder] = useState('')                                          
+  const [order, setOrder] = useState('')   
+  
+//функция очистки корзины после перехода к оплате
+function cleanCart() {
+  setCart({})
+  setInfo([])
+  Object.keys(localStorage).forEach((el)=> { 
+    if(el !== 'ally-supports-cache' && el !== 'user'){
+      localStorage.removeItem(el)
+  }
+})
+}  
 
 //функция получения информации с сервера о товарах в корзине
   async function getCartInfo(cart) {
     const cartKeys = Object.keys(cart)
-    const response = await axios.post('http://localhost:5000/admin/getcartinfo', {cart: JSON.stringify(cartKeys)})
+    const response = await axios.post('http://213.139.210.111:8080/admin/getcartinfo', {cart: JSON.stringify(cartKeys)})
     setInfo(response.data.goods)
 }
 
@@ -75,7 +86,7 @@ function MyApp({ Component, pageProps }) {
 
   //функция получения информации о пользователе
   async function getUser(email){
-    const response = await axios.post('http://localhost:5000/admin/getuser', {email})
+    const response = await axios.post('http://213.139.210.111:8080/admin/getuser', {email})
     if(response.data.success){
       let personalCopy = {...personal}
       personalCopy.formcontrolls.name.value = response.data.user.name || 'Не указано'
@@ -177,7 +188,7 @@ function MyApp({ Component, pageProps }) {
 
   async function getPoints(query) {
     const search = {search: query}
-    const response = await axios.post('http://localhost:5000/admin/searchpoints', search)
+    const response = await axios.post('http://213.139.210.111:8080/admin/searchpoints', search)
     let arr = response.data.points
     let points = {}
     arr.forEach((point)=>{
@@ -277,7 +288,7 @@ function getOrder() {
 //вход в профиль
 async function loginHandler(phone, email) {
   const data = {phone, email}
-  const response = await axios.post('http://localhost:5000/admin/login', data)
+  const response = await axios.post('http://213.139.210.111:8080/admin/login', data)
   if(response.data.success){
     let personalCopy = {...personal}
     personalCopy.formcontrolls.name.value = response.data.user.name || 'Не указано'
@@ -331,7 +342,8 @@ async function loginHandler(phone, email) {
                 token,
                 searchInputValue,
                 changeSearchInput,
-                cleanInput
+                cleanInput,
+                cleanCart
       }
     }}>
       <Component {...pageProps}/> 

@@ -132,7 +132,7 @@ function hideOverlay() {
 }
 
 export async function getServerSideProps({params}) {
-    const response = await axios.post('http://localhost:5000/admin/onegood', {article: params.id})
+    const response = await axios.post('http://213.139.210.111:8080/admin/onegood', {article: params.id})
     const good = response.data.good
   return {
     props: {good}
