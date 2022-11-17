@@ -85,7 +85,7 @@ const Order = () => {
 
    async function postOrder(obj) {
          let order = JSON.stringify(obj)
-         const response = await axios.post('http://213.139.210.111:8080/admin/postorder', {order})
+         const response = await axios.post('213.139.210.111:8080/admin/postorder', {order})
          console.log(response.data)
          state.cleanCart()
          window.location.href = 'https://yookassa.ru/my/i/Y3X0gCXhSM10/l'
@@ -136,7 +136,7 @@ const Order = () => {
                                                                 price: state.info[good.headArticle].kinds[good.article].price || ''
                                                             }
                          return (
-                            <div className="order__good-item">
+                            <div className="order__good-item" key = {i}>
                                 <small>{i+1}.</small>
                                 <div><span>{state.info[good.headArticle].name} 
                                 {state.info[good.headArticle].kinds[good.article].option === 'Пустое поле' ? '' : (state.info[good.headArticle].kinds[good.article].option)}</span></div>

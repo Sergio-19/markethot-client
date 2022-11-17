@@ -6,6 +6,7 @@ import Galery from "../../components/galery/Galery";
 import GoodKind from "../../components/goodKind/GoodKind";
 import AppContext from "../../appContext";
 import { useContext } from "react";
+import Image from "next/image";
 
 const Good = ({good}) => {
     const {state} = useContext(AppContext)

@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 
 
 
+
 const GoodCard = ({article, image, title, oldprice, price}) => {
     const router = useRouter()
     return(

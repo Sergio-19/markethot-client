@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import AppContext from "../../appContext"
 import { useContext } from "react"
+import Link from "next/link"
 
 const Header = () => {
     const {state} = useContext(AppContext)
@@ -45,7 +46,7 @@ const Header = () => {
             <div className="container">
                 <div className="header__content">
                     <div className="header__logo">
-                        <a href="/">Hopa_Store</a>
+                        <Link href="/"><a>Hopa_Store</a></Link>
                     </div>
                     <div className="header__search">
                         <div className="header__search__wrap">
