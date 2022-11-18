@@ -47,7 +47,7 @@ function cleanCart() {
 //функция получения информации с сервера о товарах в корзине
   async function getCartInfo(cart) {
     const cartKeys = Object.keys(cart)
-    const response = await axios.post('http://45.141.77.224:8080/admin/getcartinfo', {cart: JSON.stringify(cartKeys)})
+    const response = await axios.post('http://45.141.77.15:8080/admin/getcartinfo', {cart: JSON.stringify(cartKeys)})
     setInfo(response.data.goods)
 }
 
@@ -86,7 +86,7 @@ function cleanCart() {
 
   //функция получения информации о пользователе
   async function getUser(email){
-    const response = await axios.post('http://45.141.77.224:8080/admin/getuser', {email})
+    const response = await axios.post('http://45.141.77.15:8080/admin/getuser', {email})
     if(response.data.success){
       let personalCopy = {...personal}
       personalCopy.formcontrolls.name.value = response.data.user.name || 'Не указано'
@@ -188,7 +188,7 @@ function cleanCart() {
 
   async function getPoints(query) {
     const search = {search: query}
-    const response = await axios.post('http://45.141.77.224:8080/admin/searchpoints', search)
+    const response = await axios.post('http://45.141.77.15:8080/admin/searchpoints', search)
     let arr = response.data.points
     let points = {}
     arr.forEach((point)=>{
@@ -288,7 +288,7 @@ function getOrder() {
 //вход в профиль
 async function loginHandler(phone, email) {
   const data = {phone, email}
-  const response = await axios.post('http://45.141.77.224:8080/admin/login', data)
+  const response = await axios.post('http://45.141.77.15:8080/admin/login', data)
   if(response.data.success){
     let personalCopy = {...personal}
     personalCopy.formcontrolls.name.value = response.data.user.name || 'Не указано'
