@@ -64,7 +64,7 @@ export default function Home({goods}) {
 }
 
 export async function getStaticProps(context) {
-      const response = await axios('http://213.139.210.111:8080/admin/randomgoods')
+      const response = await axios('http://45.141.77.224:8080/admin/randomgoods')
       const goods = response.data.goods
   return {
     props: {goods}, // will be passed to the page component as props

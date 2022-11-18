@@ -78,7 +78,7 @@ function whatMethod(query) {
 }
 
 export async function getServerSideProps({params}) {
-    const response = await axios.post('http://213.139.210.111:8080/admin/allgoods', {category: params.category, met: whatMethod(params.category)})
+    const response = await axios.post('http://45.141.77.224:8080/admin/allgoods', {category: params.category, met: whatMethod(params.category)})
     const goods = response.data.goods
   return {
     props: {goods}, // will be passed to the page component as props
