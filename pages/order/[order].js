@@ -1,12 +1,29 @@
 import Layout from "../../components/layout/Layout"
 import { useRouter } from "next/router"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import AppContext from "../../appContext"
 import Loader from "../../components/loader/Loader"
 import axios from "axios"
+import config from "../../my.config"
+import MiniLoader from "../../components/loader/MiniLoader"
+
 
 
 const Order = () => {
+
+    const [miniLoader, setMiniLoader] = useState(false)
+
+   
+    function getTemplate(miniLoader) {
+        if(miniLoader){
+            return <MiniLoader/>
+        } else {
+            return <button onClick = {()=> postOrder(orderObj)}>Перейти к оплате</button>
+        }
+    }
+
+   
+
 
     const {state} = useContext(AppContext)
   
@@ -84,11 +101,26 @@ const Order = () => {
                   }
 
    async function postOrder(obj) {
-         let order = JSON.stringify(obj)
-         const response = await axios.post('http://45.141.77.15:8080/admin/postorder', {order})
-         console.log(response.data)
-         state.cleanCart()
-         window.location.href = 'https://yookassa.ru/my/i/Y3X0gCXhSM10/l'
+        setMiniLoader(true)
+        try {
+            let order = JSON.stringify(obj)
+            const response = await axios.post(`${config.server}/admin/postorder`, {order})
+            if(response.data.payment){
+              const {payment} = response.data
+            const confirmationURL = payment.confirmation.confirmation_url
+            state.cleanCart()
+            window.location.href = confirmationURL 
+            } else {
+                state.clearOrder()
+                setMiniLoader(false)
+            }
+
+        } catch(e){
+            console.log('Что-то пошло не так при переходе к оплате', e)
+        }
+         
+   
+
         }
 
 
@@ -162,7 +194,7 @@ const Order = () => {
                         </div>
                     </div>
                     <div className="cart__order-btn order__button">
-                        {Object.keys(state.cart).length === 0 ? <></> : <button onClick = {()=> postOrder(orderObj)}>Перейти к оплате</button>}
+                        {Object.keys(state.cart).length === 0 ? <></> : getTemplate(miniLoader)}
                     </div>
                 </div> 
             </div>}

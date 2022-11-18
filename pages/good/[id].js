@@ -6,7 +6,7 @@ import Galery from "../../components/galery/Galery";
 import GoodKind from "../../components/goodKind/GoodKind";
 import AppContext from "../../appContext";
 import { useContext } from "react";
-import Image from "next/image";
+import config from "../../my.config";
 
 const Good = ({good}) => {
     const {state} = useContext(AppContext)
@@ -133,7 +133,7 @@ function hideOverlay() {
 }
 
 export async function getServerSideProps({params}) {
-    const response = await axios.post('http://45.141.77.15:8080/admin/onegood', {article: params.id})
+    const response = await axios.post(`${config.server}/admin/onegood`, {article: params.id})
     const good = response.data.good
   return {
     props: {good}

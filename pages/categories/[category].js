@@ -2,6 +2,7 @@ import Layout from "../../components/layout/Layout";
 import GoodCard from "../../components/goodCard/GoodCard";
 import axios from "axios";
 import { useRouter } from "next/router";
+import config from "../../my.config";
 
 
 const CategoryPage = ({goods}) => {
@@ -78,7 +79,7 @@ function whatMethod(query) {
 }
 
 export async function getServerSideProps({params}) {
-    const response = await axios.post('http://45.141.77.15:8080/admin/allgoods', {category: params.category, met: whatMethod(params.category)})
+    const response = await axios.post(`${config.server}/admin/allgoods`, {category: params.category, met: whatMethod(params.category)})
     const goods = response.data.goods
   return {
     props: {goods}, // will be passed to the page component as props

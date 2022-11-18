@@ -3,6 +3,7 @@ import Link from "next/link";
 import GoodCard from "../components/goodCard/GoodCard";
 import axios from "axios";
 import Loader from "../components/loader/Loader";
+import config from '../my.config'
 
 
 export default function Home({goods}) {
@@ -64,7 +65,7 @@ export default function Home({goods}) {
 }
 
 export async function getStaticProps(context) {
-      const response = await axios('http://45.141.77.15:8080/admin/randomgoods')
+      const response = await axios(`${config.server}/admin/randomgoods`)
       const goods = response.data.goods
   return {
     props: {goods}, // will be passed to the page component as props

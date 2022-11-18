@@ -9,13 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@a2seven/yoo-checkout": "^1.1.4",
     "@reduxjs/toolkit": "^1.8.6",
     "axios": "^1.1.2",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.0.4",
-    "sass": "^1.55.0"
+    "sass": "^1.55.0",
+    "yookassa": "^0.1.1"
   },
   "devDependencies": {
     "eslint": "8.25.0",

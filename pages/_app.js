@@ -4,6 +4,7 @@ import AppContext from '../appContext'
 import { useState, useEffect } from 'react'
 import axios from "axios"
 import generatePassword from '../generatePassword'
+import config from '../my.config'
 
 
 
@@ -47,7 +48,7 @@ function cleanCart() {
 //функция получения информации с сервера о товарах в корзине
   async function getCartInfo(cart) {
     const cartKeys = Object.keys(cart)
-    const response = await axios.post('http://45.141.77.15:8080/admin/getcartinfo', {cart: JSON.stringify(cartKeys)})
+    const response = await axios.post(`${config.server}/admin/getcartinfo`, {cart: JSON.stringify(cartKeys)})
     setInfo(response.data.goods)
 }
 
@@ -86,7 +87,7 @@ function cleanCart() {
 
   //функция получения информации о пользователе
   async function getUser(email){
-    const response = await axios.post('http://45.141.77.15:8080/admin/getuser', {email})
+    const response = await axios.post(`${config.server}/admin/getuser`, {email})
     if(response.data.success){
       let personalCopy = {...personal}
       personalCopy.formcontrolls.name.value = response.data.user.name || 'Не указано'
@@ -188,7 +189,7 @@ function cleanCart() {
 
   async function getPoints(query) {
     const search = {search: query}
-    const response = await axios.post('http://45.141.77.15:8080/admin/searchpoints', search)
+    const response = await axios.post(`${config.server}/admin/searchpoints`, search)
     let arr = response.data.points
     let points = {}
     arr.forEach((point)=>{
@@ -285,10 +286,14 @@ function getOrder() {
   setOrder(generatePassword(10))
 }
 
+function clearOrder() {
+  setOrder('')
+}
+
 //вход в профиль
 async function loginHandler(phone, email) {
   const data = {phone, email}
-  const response = await axios.post('http://45.141.77.15:8080/admin/login', data)
+  const response = await axios.post(`${config.server}/admin/login`, data)
   if(response.data.success){
     let personalCopy = {...personal}
     personalCopy.formcontrolls.name.value = response.data.user.name || 'Не указано'
@@ -343,7 +348,8 @@ async function loginHandler(phone, email) {
                 searchInputValue,
                 changeSearchInput,
                 cleanInput,
-                cleanCart
+                cleanCart,
+                clearOrder
       }
     }}>
       <Component {...pageProps}/> 
